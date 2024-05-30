@@ -1,0 +1,29 @@
+<div class="card">
+    <p-table [value]="listUser" [rows]="5" [paginator]="true" [rowHover]="true">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Fullname</th>
+                <th>Username </th>
+                <th>Phone </th>
+                <th>Email </th>
+                <th>Address </th>
+
+                <th>Status</th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-user>
+            <tr>
+                <td>{{user.firstname}} {{user.lastname}}</td>
+                <td>{{user.username}}</td>
+                <td>{{user.phone}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.address}}</td>
+                    <td>
+                        <button class="btn btn-success" (click)="enableUser(user.id)" *ngIf="user.enabled">Enabled</button>
+                        <button class="btn btn-danger" (click)="enableUser(user.id)" *ngIf="!user.enabled">Disabled</button>
+                    </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

@@ -1,0 +1,114 @@
+<div id="wrapper">
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <!-- Sidebar Brand -->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" routerLink="/admin">
+            <div class="sidebar-brand-text mx-3">DASHBOARD ADMIN</div>
+        </a>
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+        <!-- Dashboard -->
+        <li class="nav-item active">
+            <a class="nav-link" routerLink="/admin">
+                <span>Dashboard</span>
+            </a>
+        </li>
+        <!-- Product -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" routerLink="/admin/product" data-toggle="collapse" data-target="#collapseUtilities"
+                aria-expanded="true" aria-controls="collapseUtilities">
+                <span>Sản phẩm</span>
+            </a>
+        </li>
+        <!-- Order -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" routerLink="/admin/order" data-toggle="collapse" data-target="#collapsePages"
+                aria-expanded="true" aria-controls="collapsePages">
+                <span>Đơn hàng</span>
+            </a>
+        </li>
+        <!-- Category -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" routerLink="/admin/category"data-toggle="collapse" data-target="#collapseTwo"
+                aria-expanded="true" aria-controls="collapseTwo">
+                <span>Danh mục</span>
+            </a>
+        </li>
+        <!-- Order -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" routerLink="/admin/userlist" data-toggle="collapse" data-target="#collapsePages"
+                aria-expanded="true" aria-controls="collapsePages">
+                <span>User list</span>
+            </a>
+        </li>
+        <!-- Tag -->
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/admin/tag">
+                <span>Tag</span>
+            </a>
+        </li>
+        <!-- Blog -->
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/admin/blog">
+                <span>Bài viết</span>
+            </a>
+        </li>
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
+    </ul>
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+            <!-- Topbar -->
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <!-- Search Form -->
+                <h2 class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100">
+                    HAVE A NICE DAY !
+                </h2>
+                <!-- Topbar Navbar -->
+                <ul class="navbar-nav ml-auto">
+                    <!-- Alerts Dropdown -->
+                    <li class="nav-item no-arrow mx-1">
+                        <a class="nav-link" href="#" id="alertsDropdown" role="button"
+                            aria-haspopup="true" aria-expanded="false">
+                            <p class="mt-2">Thông báo</p>
+                            <span class="badge badge-danger badge-counter">3+</span>
+                        </a>
+                    </li>
+                    <!-- Messages Dropdown -->
+                    <li class="nav-item dropdown no-arrow mx-1">
+                        <a class="nav-link" href="#" id="messagesDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <p class="mt-2">Tin nhắn</p>
+                            <span class="badge badge-danger badge-counter">7</span>
+                        </a>
+                    </li>
+                    <!-- User Dropdown -->
+                    <li class="nav-item no-arrow" ngbDropdown>
+                        <a class="nav-link"  role="button" ngbDropdownToggle >
+                            <span class="mr-2 d-none d-lg-inline text-gray-600  ">Admin</span>
+                            <img class="img-profile rounded-circle"
+                                src="assets/image/author.jpg">
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" ngbDropdownMenu>
+                            <a class="dropdown-item" ngbDropdownItem>
+                                Profile
+                            </a>
+                            <a class="dropdown-item" ngbDropdownItem>
+                                Settings
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" ngbDropdownItem (click)="logout()">
+                                Logout
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+            <!-- Page Content -->
+            <div class="container-fluid">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</div>

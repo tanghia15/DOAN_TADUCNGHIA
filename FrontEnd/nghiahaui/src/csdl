@@ -1,0 +1,163 @@
+-------------BLOG------------------
+DROP TABLE IF EXISTS blog;
+
+CREATE TABLE blog (
+  id bigint NOT NULL AUTO_INCREMENT,
+  content text,
+  create_at datetime DEFAULT NULL,
+  description text,
+  title varchar(255) DEFAULT NULL,
+  image_id bigint DEFAULT NULL,
+  user_id bigint DEFAULT NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT `FK_image_blog` FOREIGN KEY (image_id) REFERENCES image (`id`),
+  CONSTRAINT `FK_user_blog` FOREIGN KEY (user_id) REFERENCES user (`id`)
+
+);
+---------------BLOG_TAG----------------
+DROP TABLE IF EXISTS blog_tag;
+
+CREATE TABLE blog_tag (
+  blog_id BIGINT NOT NULL,
+  tag_id BIGINT NOT NULL,
+  PRIMARY KEY (blog_id, tag_id),
+  KEY FK_blog_tag_tag_id (tag_id),
+  CONSTRAINT FK_blog_tag_blog_id FOREIGN KEY (blog_id) REFERENCES blog (id),
+  CONSTRAINT FK_blog_tag_tag_id FOREIGN KEY (tag_id) REFERENCES tag (id)
+);
+--------------TAG--------------------
+DROP TABLE IF EXISTS tag;
+
+CREATE TABLE tag (
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  enable BIT(1) NOT NULL,
+  name VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (id)
+);
+-----------CATEGORY-------------
+DROP TABLE IF EXISTS category;
+
+CREATE TABLE category (
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  enable BIT(1) NOT NULL,
+  name VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (id)
+);
+-----------IMAGE---------------
+DROP TABLE IF EXISTS image;
+
+CREATE TABLE image (
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  data LONGBLOB,
+  name VARCHAR(255) DEFAULT NULL,
+  size BIGINT NOT NULL,
+  type VARCHAR(255) DEFAULT NULL,
+  uploaded_by BIGINT DEFAULT NULL,
+  PRIMARY KEY (id),
+  KEY FK_image_uploaded_by (uploaded_by),
+  CONSTRAINT FK_image_uploaded_by FOREIGN KEY (uploaded_by) REFERENCES user (id)
+);
+-----------ORDER_DETAIL------------
+DROP TABLE IF EXISTS order_detail;
+
+CREATE TABLE order_detail (
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(255) DEFAULT NULL,
+  price BIGINT NOT NULL,
+  quantity INT NOT NULL,
+  sub_total BIGINT NOT NULL,
+  order_id BIGINT DEFAULT NULL,
+  product_id BIGINT DEFAULT NULL,
+  PRIMARY KEY (id),
+  KEY FK_order_detail_order_id (order_id),
+  KEY FK_order_detail_product_id (product_id),
+  CONSTRAINT FK_order_detail_order_id FOREIGN KEY (order_id) REFERENCES orders (id),
+  CONSTRAINT FK_order_detail_product_id FOREIGN KEY (product_id) REFERENCES product (id)
+);
+---------------ORDER-----------------
+DROP TABLE IF EXISTS orders;
+
+CREATE TABLE orders (
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  address VARCHAR(255) DEFAULT NULL,
+  country VARCHAR(255) DEFAULT NULL,
+  email VARCHAR(255) DEFAULT NULL,
+  firstname VARCHAR(255) DEFAULT NULL,
+  lastname VARCHAR(255) DEFAULT NULL,
+  note VARCHAR(255) DEFAULT NULL,
+  phone VARCHAR(255) DEFAULT NULL,
+  post_code BIGINT NOT NULL,
+  state VARCHAR(255) DEFAULT NULL,
+  total_price BIGINT NOT NULL,
+  town VARCHAR(255) DEFAULT NULL,
+  user_id BIGINT DEFAULT NULL,
+  PRIMARY KEY (id),
+  KEY FK_orders_user_id (user_id),
+  CONSTRAINT FK_orders_user_id FOREIGN KEY (user_id) REFERENCES user (id)
+);
+-------------PRODUCT--------------
+DROP TABLE IF EXISTS product;
+
+CREATE TABLE product (
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  description TEXT,
+  name VARCHAR(255) DEFAULT NULL,
+  price BIGINT NOT NULL,
+  quantity INT NOT NULL,
+  category_id BIGINT DEFAULT NULL,
+  PRIMARY KEY (id),
+  KEY FK_product_category_id (category_id),
+  CONSTRAINT FK_product_category_id FOREIGN KEY (category_id) REFERENCES category (id)
+);
+----------PRODUCT_IMAGE-------------
+DROP TABLE IF EXISTS product_image;
+
+CREATE TABLE product_image (
+  product_id BIGINT NOT NULL,
+  image_id BIGINT NOT NULL,
+  PRIMARY KEY (product_id, image_id),
+  KEY FK_product_image_image_id (image_id),
+  CONSTRAINT FK_product_image_product_id FOREIGN KEY (product_id) REFERENCES product (id),
+  CONSTRAINT FK_product_image_image_id FOREIGN KEY (image_id) REFERENCES image (id)
+);
+------------ROLE-------------------
+DROP TABLE IF EXISTS role;
+
+CREATE TABLE role (
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(20) DEFAULT NULL,
+  PRIMARY KEY (id)
+);
+
+INSERT INTO role VALUES (1,'ROLE_ADMIN'),(2,'ROLE_MODERATOR'),(3,'ROLE_USER');
+-----------USER-----------------
+DROP TABLE IF EXISTS user;
+
+CREATE TABLE user (
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  address VARCHAR(255) DEFAULT NULL,
+  country VARCHAR(255) DEFAULT NULL,
+  email VARCHAR(255) DEFAULT NULL,
+  enabled BIT(1) NOT NULL,
+  firstname VARCHAR(255) DEFAULT NULL,
+  lastname VARCHAR(255) DEFAULT NULL,
+  password VARCHAR(255) DEFAULT NULL,
+  phone VARCHAR(255) DEFAULT NULL,
+  state VARCHAR(255) DEFAULT NULL,
+  username VARCHAR(255) DEFAULT NULL,
+  verification_code VARCHAR(64) DEFAULT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY UK_user_email (email),
+  UNIQUE KEY UK_user_username (username)
+);
+-------------USER_ROLE--------------
+DROP TABLE IF EXISTS user_roles;
+
+CREATE TABLE user_roles (
+  user_id BIGINT NOT NULL,
+  role_id BIGINT NOT NULL,
+  PRIMARY KEY (user_id, role_id),
+  KEY FK_user_roles_role_id (role_id),
+  CONSTRAINT FK_user_roles_user_id FOREIGN KEY (user_id) REFERENCES user (id),
+  CONSTRAINT FK_user_roles_role_id FOREIGN KEY (role_id) REFERENCES role (id)
+);

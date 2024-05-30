@@ -1,0 +1,50 @@
+
+<p-toast></p-toast>
+<div class="banner">
+    <img width="100%" src="assets/image/banner.jpg" alt="">
+</div>
+<section class="categories">
+    <div class="container">
+        <div class="row">
+            <p-carousel [value]="category_items" [numScroll]="1" [numVisible]="4" [circular]="true" [showIndicators]="false" [autoplayInterval]="4000">       
+                <ng-template let-item pTemplate="item" >
+                    <div class="col">
+                        <div class="categories__item set-bg" [ngStyle]="{'background-image': 'url('+ item.src +')'}">
+                            <h5><a href="javascript:void(0)">{{item.title}}</a></h5>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-carousel>
+        </div>
+    </div>
+</section>
+<!-- Lastest Section Begin -->
+<section class="featured spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h2>Newest Product</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row featured__filter">
+            <div class="col-lg-3 col-md-4 col-sm-6" *ngFor="let product of listProductNewest">
+                <div class="featured__item">
+                    <div class="featured__item__pic set-bg" [ngStyle]="{'background-image': 'url(data:image/jpeg;base64,'+ product.images[0].data+')'}">
+                        <ul class="picture_hover">
+                            <li><a href="javascript:void(0)" (click)="addToWishList(product)"><fa-icon [icon]="heart"></fa-icon></a></li>
+                            <li><a href="javascript:void(0)" routerLink="/product/{{product.id}}"><fa-icon [icon]="retweet"></fa-icon></a></li>
+                            <!-- <li><a href="javascript:void(0)" (click)="addToCart(product)"><fa-icon [icon]="bag"></fa-icon></a></li> -->
+                        </ul>
+                    </div>
+                    <div class="featured__item__text">
+                        <h6><a href="javascript:void(0)">{{product.name}}</a></h6>
+                        <h5>{{product.price | currency}}</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Lastest Section End -->

@@ -1,0 +1,34 @@
+<div *ngIf="orderDetail && orderDetail.length > 0" class="order-details">
+    <h2>Order Details</h2>
+    <table class="order-table">
+      <thead>
+        <tr>
+          <th>Order Detail ID</th>
+          <th>Product Name</th>
+
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Subtotal</th>
+          <th>Product ID</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let detail of orderDetail">
+            <td>{{detail.id}}</td>
+          <td>{{ detail.name }}</td>
+          <td>{{ detail.quantity }}</td>
+          <td>${{ detail.price }}</td>
+          <td>${{ detail.subTotal }}</td>
+          <td>{{detail.product.id}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- Nút Back -->
+    <div class="back-button-container">
+        <button (click)="goBack()" class="btn btn-primary">Back</button>
+    </div>
+  </div>
+  <div *ngIf="!orderDetail || orderDetail.length === 0">
+    <p>No order details found.</p>
+  </div>
+  

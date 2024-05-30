@@ -1,0 +1,54 @@
+<p-toast></p-toast>
+<p-card>
+    <p-toolbar styleClass="mb-4 gap-2">
+        <ng-template pTemplate="left">
+            <button class="btn btn-success mr-2" (click)="showForm()">Thêm danh mục</button>
+        </ng-template>
+    </p-toolbar>
+
+    <p-dialog header="Danh mục" [(visible)]="displayForm" [style]="{width: '30vw'}" [modal]="true" [transitionOptions]="'.3s'">
+        <form action="">
+            <div class="p-field">
+                <label for="username">Tên danh mục: </label>
+                <input type="text" class="w-full mt-2" [(ngModel)]="categoryForm.name" name="name">
+            </div>
+            <div class="p-field mt-3">
+                <button type="submit" class="btn btn-primary" (click)="createCategory()" *ngIf="!onUpdate" >Tạo mới</button>
+                <button type="submit" (click)="updateCategory()" *ngIf="onUpdate" >Cập nhật</button>
+                <button type="button" class="btn btn-danger ml-3" (click)="displayForm=false">Hủy</button>
+            </div>
+        </form>
+    </p-dialog>
+
+    <p-table [value]="listCategory" [rows]="5" [paginator]="true" [rowHover]="true">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Name</th>
+                <th>Enable</th>
+                <th>Action</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-category>
+            <tr> 
+                <td>{{category.name}}</td>
+                <td>
+                    <button type="button" class="btn btn-success" (click)="enableCategory(category.id)" *ngIf="category.enable">Enabled</button>
+                    <button type="button" class="btn btn-danger" (click)="enableCategory(category.id)" *ngIf="!category.enable">Disabled</button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-primary" (click)="onUpdateForm(category.id,category.name)">Update</button>
+                    <button type="button" class="btn btn-danger ml-2" (click)="onDelete(category.id,category.name)">Delete</button>
+                    <p-dialog header="Xác nhận" [(visible)]="deleteForm" [style]="{width :'30vw'}" [modal]="true" [transitionOptions]="'.3s'">
+                        <div>
+                            <span class="ml-2">Bạn có chắc chắn muốn xóa sản phẩm <span>{{categoryForm.name}}</span> ?</span>
+                        </div>
+                        <div class="flex justify-content-end mt-3">
+                            <button class="btn btn-danger mr-2" (click)="deleteCategory()">Yes</button>
+                            <button class="btn btn-primary" (click)="deleteForm=false">No</button>
+                        </div>
+                    </p-dialog>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</p-card>

@@ -1,0 +1,58 @@
+<p-toast></p-toast>
+
+<p-card>
+    <p-toolbar styleClass="mb-4 gap-2">
+        <ng-template pTemplate="left">
+            <button class="btn btn-success mr-2" (click)="showForm()" >Add Tag</button>
+        </ng-template>
+    </p-toolbar>
+
+    <p-dialog header="Tag" [(visible)]="displayForm" [style]="{width: '30vw'}" [modal]="true" [transitionOptions]="'.2s'">
+        <form action="">
+            <div class="p-field">
+                <label for="username">Tên Tag: </label>
+                <input type="text" class="w-auto ml-2" [(ngModel)]="tagForm.name" name="name">
+            </div>
+            <div class="p-field mt-3">
+                <button class="btn btn-success" type="submit" (click)="createTag()" *ngIf="!onUpdate" >Tạo mới</button>
+                <button class="btn btn-success" type="submit" *ngIf="onUpdate" >Cập nhật</button>
+                <button type="button" class="btn btn-danger ml-3" (click)="displayForm=false">Hủy</button>
+            </div>
+        </form>
+    </p-dialog>
+
+    <p-table [value]="listTag" [rows]="5" [paginator]="true">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Name</th>
+                <th>Enable</th>
+                <th>Action</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-tag>
+            <tr> 
+                <td>{{tag.name}}</td>
+                <td>
+                    <button class="btn btn-success" (click)="enableTag(tag.id)" *ngIf="tag.enable">Enabled</button>
+                    <button class="btn btn-danger" (click)="enableTag(tag.id)" *ngIf="!tag.enable">Disabled</button>
+                </td>
+                <td>
+                    <button class="btn btn-primary">Update</button>
+                    <button (click)="onDelete(tag.id,tag.name)" class="btn btn-danger ml-2">Delete</button>
+                    <p-dialog header="Xác nhận" [(visible)]="deleteForm" [style]="{width :'30vw'}" [modal]="true" [transitionOptions]="'.3s'">
+                        <div>
+                            <i class="pi pi pi-exclamation-triangle"></i>
+                            <span class="ml-2">Bạn có chắc chắn muốn xóa <span></span> ?</span>
+                        </div>
+                        <div class="flex justify-content-end mt-3">
+                            <button (click)="deleteTag()" class="btn btn-danger mr-2" >Yes</button>
+                            <button (click)="deleteForm=false" class="btn btn-primary">No</button>
+                        </div>
+                    </p-dialog>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+</p-card>
+
